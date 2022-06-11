@@ -35,7 +35,7 @@ def menu():
             if another_chance == "Y":
                 wallet = reset_wallet()
             elif another_chance == "N":
-                print("Bye Bye seu fudido")
+                print("SURUBA DE NORONHA")
                 return
         if user_input.upper() == 'A':
             wallet, race, race_won = start_race(wallet, race, race_won)
