@@ -5,13 +5,11 @@ menu_prompt = (
     '- Press B to CHECK FUNDS\n'
     '- Press C for RACE HISTORY\n'
     '- Press D to RESET WALLET\n'
+    '- Press X to BACK UP WALLET\n'
     '- Press Q to QUIT\n'
     '- Choose: '
 )
 
-
-
-# while loop na funcao MENU()!!!!!!!!!!!!
 
 horses = [
     {'horse': 1, 'name': 'Ludovico', 'pay rate': 1.15, 'odds': .3},
@@ -28,8 +26,9 @@ def menu():
     wallet = 1000
     race = 0
     race_won = 0
+    reset = 0
     while user_input.upper() != 'Q':
-        if wallet < 15:
+        if wallet < 10:
             print("Insufficient funds")
             another_chance = input("Would you like to RESET YOUR WALLET? Y/N ")
             if another_chance == "Y":
@@ -44,12 +43,19 @@ def menu():
         elif user_input.upper() == 'C':
             race_history(race, race_won)
         elif user_input.upper() == 'D':
-            wallet = reset_wallet()
+            wallet = reset_wallet(reset)
+            reset += 1
+            if reset > 3:
+                print("You've reached the limit of resets")
+                return
         elif user_input == "":
             pass
+        elif user_input.upper() == "X":
+            wallet = backup_wallet(wallet)
         else:
             print('Unknown command. Please try again')
         user_input = input(menu_prompt)
+        save_wallet(wallet)
 
 
 def start_race(wallet, race, race_won):
@@ -69,8 +75,12 @@ def start_race(wallet, race, race_won):
         race_result = randint(1, 100)
         bet_money_int = 0
         while bet_money_int < 10 or bet_money_int > 500:
-            bet_money = input('Insert money for race: ')
-            bet_money_int = int(bet_money)
+            try:
+                bet_money = input('Insert money for race: ')
+                bet_money_int = int(bet_money)
+            except ValueError:
+                print("Only Integers")
+                continue
         wallet = wallet - bet_money_int
         race += 1
         if pick == '1' and race_result <= 30:
@@ -154,85 +164,24 @@ def race_history(race, race_won):
     print(f'Wins: {race_won} races')
 
 
-def reset_wallet():
-    wallet = 1000
-    print('Your wallet has been reset')
-    return wallet
+def reset_wallet(reset):
+    while reset < 3:
+        wallet = 1000
+        print('Your wallet has been reset')
+        return wallet
 
-#def maminha() #parametros da funcao bet_money_int, horse, wallet, race_won e retornar wallet & race_won
+def save_wallet(wallet):
+    save = open("backup_wallet.txt", "w")
+    wallet_string = str(wallet)
+    save.write(wallet_string)
+    save.close()
 
-def picks(pick, race_result, bet_money_int, wallet, race_won, horse, race):
-    if pick == '1' and race_result <= 30:
-        race_won += 1
-        pay_rate = horse["pay rate"]
-        profit = round((bet_money_int * pay_rate) - bet_money_int)
-        wallet += profit
-
-        print(race_result)
-        print(f"You won ${profit}")
-        print(f'Your current funds are ${wallet}')
-
-    elif pick == '2' and race_result > 30 and race_result <= 50:
-
-        race_won += 1
-        pay_rate = horse["pay rate"]
-        profit = round((bet_money_int * pay_rate) - bet_money_int)
-        wallet += profit
-
-        print(race_result)
-        print(f"You won ${profit}")
-        print(f'Your current funds are ${wallet}')
-
-    elif pick == '3' and race_result > 50 and race_result <= 68:
-        race_won += 1
-        pay_rate = horse["pay rate"]
-        profit = round((bet_money_int * pay_rate) - bet_money_int)
-        wallet += profit
-
-        print(race_result)
-        print(f"You won ${profit}")
-        print(f'Your current funds are ${wallet}')
-
-    elif pick == '4' and race_result > 68 and race_result <= 83:
-
-        race_won += 1
-        pay_rate = horse["pay rate"]
-        profit = round((bet_money_int * pay_rate) - bet_money_int)
-        wallet += profit
-
-        print(race_result)
-        print(f"You won ${profit}")
-        print(f'Your current funds are ${wallet}')
-
-    elif pick == '5' and race_result > 83 and race_result <= 93:
-
-        race_won += 1
-        pay_rate = horse["pay rate"]
-        profit = round((bet_money_int * pay_rate) - bet_money_int)
-        wallet += profit
-
-        print(race_result)
-        print(f"You won ${profit}")
-        print(f'Your current funds are ${wallet}')
-
-    elif pick == '6' and race_result > 93:
-        race_won += 1
-
-        pay_rate = horse["pay rate"]
-        profit = round((bet_money_int * pay_rate) - bet_money_int)
-        wallet += profit
-        print(race_result)
-        print(f"You won ${profit}")
-        print(f'Your current funds are ${wallet}')
-
-    else:
-        print("YOU LOST")
-
-        print(f"Your current amount is {wallet}")
-
-    return wallet, race, race_won
-
-
+def backup_wallet(wallet):
+    with open('backup_wallet.txt') as backup:
+        for line in backup:
+            wallet = int(line)
+            print (f"Your current wallet amount is {wallet}")
+            return wallet
 
 menu()
 
