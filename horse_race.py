@@ -177,11 +177,12 @@ def save_wallet(wallet):
     save.close()
 
 def backup_wallet(wallet):
-    with open('backup_wallet.txt') as backup:
-        for line in backup:
-            wallet = int(line)
-            print (f"Your current wallet amount is {wallet}")
-            return wallet
+    backup =  open("backup_wallet.txt", "r")
+    read_backup =  backup.readline()
+    int_read_backup = int(read_backup)
+    wallet = int_read_backup
+    print(wallet)
+    return wallet
 
 menu()
 
