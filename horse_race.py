@@ -55,7 +55,7 @@ def menu():
         else:
             print('Unknown command. Please try again')
         user_input = input(menu_prompt)
-        save_wallet(wallet)
+    save_wallet(wallet)
 
 
 def start_race(wallet, race, race_won):
@@ -149,7 +149,7 @@ def start_race(wallet, race, race_won):
         else:
             print("YOU LOST")
 
-            print(f"Your current amount is {wallet}")
+            print(f"Your current amount is ${wallet}")
 
         return wallet, race, race_won
 
