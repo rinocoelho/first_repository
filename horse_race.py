@@ -185,6 +185,7 @@ def backup_wallet(wallet):
 
 menu()
 
+
 # print(display)
 # amount_to_spend = input('How much $ do you want to spend? (NUMBERS ONLY) ')
 # winner = f'{name} has won the race'
