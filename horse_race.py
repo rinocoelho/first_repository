@@ -27,6 +27,7 @@ def menu():
     race = 0
     race_won = 0
     reset = 0
+    profit_list = []
     while user_input.upper() != 'Q':
         if wallet < 10:
             print("Insufficient funds")
@@ -37,7 +38,7 @@ def menu():
                 print("BYE BYE")
                 return
         if user_input.upper() == 'A':
-            wallet, race, race_won = start_race(wallet, race, race_won)
+            wallet, race, race_won, profit_list = start_race(wallet, race, race_won, profit_list)
         elif user_input.upper() == 'B':
             check_funds(wallet)
         elif user_input.upper() == 'C':
@@ -58,7 +59,7 @@ def menu():
     save_wallet(wallet)
 
 
-def start_race(wallet, race, race_won):
+def start_race(wallet, race, race_won, profit_list):
     for horse in horses:
         list_of_horses = f'{horse["horse"]} {horse["name"]} / Pay rate: {horse["pay rate"]}'
         print(list_of_horses)
@@ -88,10 +89,11 @@ def start_race(wallet, race, race_won):
             pay_rate = horse["pay rate"]
             profit = round((bet_money_int * pay_rate) - bet_money_int)
             wallet += (profit + bet_money_int)
-
+            profit_list.append(profit)
             print(race_result)
             print(f"You won ${profit}")
             print(f'Your current funds are ${wallet}')
+            top_five(profit)
 
         elif pick == '2' and race_result > 30 and race_result <= 50:
 
@@ -99,20 +101,24 @@ def start_race(wallet, race, race_won):
             pay_rate = horse["pay rate"]
             profit = round((bet_money_int * pay_rate) - bet_money_int)
             wallet += (profit + bet_money_int)
-
+            profit_list.append(profit)
             print(race_result)
             print(f"You won ${profit}")
             print(f'Your current funds are ${wallet}')
+            top_five(profit_list)
+
 
         elif pick == '3' and race_result > 50 and race_result <= 68:
             race_won += 1
             pay_rate = horse["pay rate"]
             profit = round((bet_money_int * pay_rate) - bet_money_int)
             wallet += (profit + bet_money_int)
-
+            profit_list.append(profit)
             print(race_result)
             print(f"You won ${profit}")
             print(f'Your current funds are ${wallet}')
+            top_five(profit)
+
 
         elif pick == '4' and race_result > 68 and race_result <= 83:
 
@@ -120,10 +126,12 @@ def start_race(wallet, race, race_won):
             pay_rate = horse["pay rate"]
             profit = round((bet_money_int * pay_rate) - bet_money_int)
             wallet += (profit + bet_money_int)
-
+            profit_list.append(profit)
             print(race_result)
             print(f"You won ${profit}")
             print(f'Your current funds are ${wallet}')
+            top_five(profit)
+
 
         elif pick == '5' and race_result > 83 and race_result <= 93:
 
@@ -131,10 +139,12 @@ def start_race(wallet, race, race_won):
             pay_rate = horse["pay rate"]
             profit = round((bet_money_int * pay_rate) - bet_money_int)
             wallet += (profit + bet_money_int)
-
+            profit_list.append(profit)
             print(race_result)
             print(f"You won ${profit}")
             print(f'Your current funds are ${wallet}')
+            top_five(profit)
+
 
         elif pick == '6' and race_result > 93:
             race_won += 1
@@ -142,16 +152,18 @@ def start_race(wallet, race, race_won):
             pay_rate = horse["pay rate"]
             profit = round((bet_money_int * pay_rate) - bet_money_int)
             wallet += (profit + bet_money_int)
+            profit_list.append(profit)
             print(race_result)
             print(f"You won ${profit}")
             print(f'Your current funds are ${wallet}')
+            top_five(profit)
 
         else:
             print("YOU LOST")
 
             print(f"Your current amount is ${wallet}")
 
-        return wallet, race, race_won
+        return wallet, race, race_won, profit_list
 
 
 
@@ -184,6 +196,10 @@ def backup_wallet(wallet):
     print(wallet)
     return wallet
 
+def top_five(profit_list):
+    top = open("top_five.txt", "w")
+    print(profit_list)
+    top.close()
 menu()
 
 
