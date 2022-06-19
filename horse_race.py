@@ -33,7 +33,7 @@ def menu():
             print("Insufficient funds")
             another_chance = input("Would you like to RESET YOUR WALLET? Y/N ")
             if another_chance == "Y":
-                wallet = reset_wallet()
+                wallet = reset_wallet(reset)
             elif another_chance == "N":
                 print("BYE BYE")
                 return
@@ -91,9 +91,10 @@ def start_race(wallet, race, race_won, profit_list):
             wallet += (profit + bet_money_int)
             profit_list.append(profit)
             print(race_result)
-            print(f"You won ${profit}")
+            print(f"YOU WON ${profit}")
             print(f'Your current funds are ${wallet}')
-            top_five(profit)
+            top_five(profit_list)
+
 
         elif pick == '2' and race_result > 30 and race_result <= 50:
 
@@ -103,9 +104,10 @@ def start_race(wallet, race, race_won, profit_list):
             wallet += (profit + bet_money_int)
             profit_list.append(profit)
             print(race_result)
-            print(f"You won ${profit}")
+            print(f"YOU WON ${profit}")
             print(f'Your current funds are ${wallet}')
             top_five(profit_list)
+
 
 
         elif pick == '3' and race_result > 50 and race_result <= 68:
@@ -115,9 +117,10 @@ def start_race(wallet, race, race_won, profit_list):
             wallet += (profit + bet_money_int)
             profit_list.append(profit)
             print(race_result)
-            print(f"You won ${profit}")
+            print(f"YOU WON ${profit}")
             print(f'Your current funds are ${wallet}')
-            top_five(profit)
+            top_five(profit_list)
+
 
 
         elif pick == '4' and race_result > 68 and race_result <= 83:
@@ -128,9 +131,10 @@ def start_race(wallet, race, race_won, profit_list):
             wallet += (profit + bet_money_int)
             profit_list.append(profit)
             print(race_result)
-            print(f"You won ${profit}")
+            print(f"YOU WON ${profit}")
             print(f'Your current funds are ${wallet}')
-            top_five(profit)
+            top_five(profit_list)
+
 
 
         elif pick == '5' and race_result > 83 and race_result <= 93:
@@ -141,9 +145,10 @@ def start_race(wallet, race, race_won, profit_list):
             wallet += (profit + bet_money_int)
             profit_list.append(profit)
             print(race_result)
-            print(f"You won ${profit}")
+            print(f"YOU WON ${profit}")
             print(f'Your current funds are ${wallet}')
-            top_five(profit)
+            top_five(profit_list)
+
 
 
         elif pick == '6' and race_result > 93:
@@ -154,14 +159,17 @@ def start_race(wallet, race, race_won, profit_list):
             wallet += (profit + bet_money_int)
             profit_list.append(profit)
             print(race_result)
-            print(f"You won ${profit}")
+            print(f"YOU WON ${profit}")
             print(f'Your current funds are ${wallet}')
-            top_five(profit)
+            top_five(profit_list)
+
 
         else:
             print("YOU LOST")
 
-            print(f"Your current amount is ${wallet}")
+            print(f"Your current funds are ${wallet}")
+
+
 
         return wallet, race, race_won, profit_list
 
@@ -197,10 +205,27 @@ def backup_wallet(wallet):
     return wallet
 
 def top_five(profit_list):
-    top = open("top_five.txt", "w")
-    print(profit_list)
-    top.close()
+    n = len(profit_list)
+    for l in range(n-1):
+        top = open("top_five.txt", "w")
+        for x in range(n-1):
+            if profit_list[x] > profit_list[x + 1]:
+        #troca de elementos nas posicoes x e x+1
+                profit_list[x], profit_list[x+1] = profit_list[x+1], profit_list[x]
+            #print(profit_list)
+        for rank in profit_list[-5:]:
+            top.write(f"Bet {rank}\n")
+        #str_profit = str(profit_list[-5:])
+        #top.write(f"{str_profit}\n")
+        top.close()
+
+
+
+
+
+
 menu()
+
 
 
 # print(display)
