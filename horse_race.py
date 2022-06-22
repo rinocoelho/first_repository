@@ -206,18 +206,30 @@ def backup_wallet(wallet):
 
 def top_five(profit_list):
     n = len(profit_list)
+    count = 0
     for l in range(n-1):
         top = open("top_five.txt", "w")
         for x in range(n-1):
-            if profit_list[x] > profit_list[x + 1]:
+            if profit_list[x] < profit_list[x + 1]:
         #troca de elementos nas posicoes x e x+1
                 profit_list[x], profit_list[x+1] = profit_list[x+1], profit_list[x]
-            #print(profit_list)
-        for rank in profit_list[-5:]:
-            top.write(f"Bet {rank}\n")
+
+        for bet in profit_list[:5]:
+            count +=1
+            top.write(f"{bet} is ranked {count} \n\n")
+            #print(profit_list[:5])
+
+        if count > 4 and profit_list[:5]:
+            count = 0
+
+    save_top = open("top_five.txt", "r")
+    read_top = save_top.readlines()
+    profit_list = read_top
+    print(profit_list)
+    return profit_list
         #str_profit = str(profit_list[-5:])
         #top.write(f"{str_profit}\n")
-        top.close()
+    top.close()
 
 
 
