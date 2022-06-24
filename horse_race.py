@@ -6,6 +6,7 @@ menu_prompt = (
     '- Press C for RACE HISTORY\n'
     '- Press D to RESET WALLET\n'
     '- Press X to BACK UP WALLET\n'
+    '- Press Z for TOP FIVE BETS\n'
     '- Press Q to QUIT\n'
     '- Choose: '
 )
@@ -27,7 +28,7 @@ def menu():
     race = 0
     race_won = 0
     reset = 0
-    profit_list = []
+    profit_list = [0,0,0,0,0]
     while user_input.upper() != 'Q':
         if wallet < 10:
             print("Insufficient funds")
@@ -53,6 +54,8 @@ def menu():
             pass
         elif user_input.upper() == "X":
             wallet = backup_wallet(wallet)
+        elif user_input.upper() == "Z":
+            show_top_five()
         else:
             print('Unknown command. Please try again')
         user_input = input(menu_prompt)
@@ -216,23 +219,27 @@ def top_five(profit_list):
 
         for bet in profit_list[:5]:
             count +=1
-            top.write(f"{bet} is ranked {count} \n\n")
+            top.write(f"{bet} IS RANKED {count} \n\n")
             #print(profit_list[:5])
 
         if count > 4 and profit_list[:5]:
             count = 0
 
-    save_top = open("top_five.txt", "r")
-    read_top = save_top.readlines()
-    profit_list = read_top
-    print(profit_list)
-    return profit_list
+    #save_top = open("top_five.txt", "r")
+    #read_top = save_top.readlines()
+    #profit_list = read_top
+    #print(profit_list)
+    #return profit_list
         #str_profit = str(profit_list[-5:])
         #top.write(f"{str_profit}\n")
-    top.close()
+    #top.close()
 
-
-
+def show_top_five():
+    show = open("top_five.txt", "r")
+    look_up = [line.strip() for line in show.readlines()]
+    for line in look_up:
+        print(f"\n {line}")
+    show.close()
 
 
 
